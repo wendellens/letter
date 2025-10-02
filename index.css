@@ -37,13 +37,11 @@
                 0 0 100px rgba(200, 169, 255, 0.2);
     position: relative;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: visible;
     margin: auto;
     padding: 20px;
     width: fit-content;
     height: fit-content;
-    max-width: 90vw;
-    max-height: 90vh;
   }
   .envelope-wrapper > .envelope {
     position: relative;
@@ -722,108 +720,5 @@
     75% {
       opacity: 1;
       transform: translateY(-15px) rotate(270deg);
-    }
-  }
-
-  /* Mobile Responsive Adjustments */
-  @media screen and (max-width: 768px) {
-    .container {
-      padding: 10px;
-    }
-    
-    .container > .envelope-wrapper {
-      padding: 15px;
-      max-width: 95vw;
-      max-height: 85vh;
-      overflow: hidden;
-    }
-    
-    .envelope-wrapper > .envelope {
-      width: 280px;
-      height: 200px;
-      overflow: hidden;
-    }
-    
-    .envelope > .letter {
-      width: 50%;
-      height: 75%;
-      padding: 15px 8px;
-      overflow: hidden;
-    }
-    
-    .envelope > .letter > .text {
-      font-size: 9px;
-      overflow: hidden;
-    }
-    
-    .flap > .envelope > .letter {
-      bottom: 150px;
-      transform: translateY(-50px) scale(1.02);
-      overflow: hidden;
-    }
-    
-    /* Adjust decorative elements for mobile */
-    .envelope-wrapper .corner-flower-1,
-    .envelope-wrapper .corner-flower-2,
-    .envelope-wrapper .corner-flower-3,
-    .envelope-wrapper .corner-flower-4 {
-      font-size: 18px;
-    }
-    
-    .envelope-wrapper .corner-flower-1 {
-      top: -30px;
-      left: -30px;
-    }
-    
-    .envelope-wrapper .corner-flower-2 {
-      top: -30px;
-      right: -30px;
-    }
-    
-    .envelope-wrapper .corner-flower-3 {
-      bottom: -30px;
-      left: -30px;
-    }
-    
-    .envelope-wrapper .corner-flower-4 {
-      bottom: -30px;
-      right: -30px;
-    }
-    
-    .envelope-wrapper .side-hearts-left {
-      left: -40px;
-      font-size: 14px;
-    }
-    
-    .envelope-wrapper .side-hearts-right {
-      right: -40px;
-      font-size: 14px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .container > .envelope-wrapper {
-      padding: 10px;
-      max-width: 98vw;
-    }
-    
-    .envelope-wrapper > .envelope {
-      width: 250px;
-      height: 180px;
-    }
-    
-    .envelope > .letter {
-      width: 48%;
-      height: 70%;
-      padding: 12px 6px;
-    }
-    
-    .envelope > .letter > .text {
-      font-size: 8px;
-    }
-    
-    .flap > .envelope > .letter {
-      bottom: 130px;
-      transform: translateY(-40px) scale(1.01);
     }
   }
