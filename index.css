@@ -580,17 +580,6 @@
     z-index: -1;
   }
 
-  /* Decorative Hearts */
-  .envelope-wrapper::after {
-    content: '💜 💕 💜';
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    z-index: 10;
-    animation: gentleGlow 3s ease-in-out infinite alternate;
-  }
 
   /* Corner Flowers */
   .envelope-wrapper .corner-flower-1,
