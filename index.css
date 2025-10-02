@@ -61,9 +61,10 @@
     height: 80%;
     background: var(--primary);
     text-align: center;
-    transition: all 1s ease-in-out;
+    transition: transform 0.9s ease, bottom 0.9s ease, box-shadow 0.3s ease;
     box-shadow: 0 0 5px var(--shadow-color);
     padding: 20px 10px;
+    z-index: 1;
   }
   
   .envelope > .letter > .text {
@@ -81,7 +82,7 @@
     background: var(--heart-color);
     z-index: 4;
     transform: translate(-50%, -20%) rotate(45deg);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 1px 6px var(--shadow-color);
     cursor: pointer;
   }
@@ -105,9 +106,11 @@
     z-index: 0;
   }
   .flap > .envelope > .letter {
-    bottom: 120px; /* lifts the letter out of the envelope */
-    transform: translateY(-20px) scale(1.15);
-    transition-delay: 0.3s;
+    bottom: 170px; /* lifts the letter clearly out of the envelope */
+    transform: translateY(-60px) scale(1.05);
+    transition-delay: 0.15s;
+    z-index: 5; /* ensure above envelope cover */
+    box-shadow: 0 6px 18px var(--shadow-color);
   }
   .flap > .heart {
     transform: translate(-50%, -20%) rotate(90deg);
@@ -134,16 +137,470 @@
     z-index: 3; /* Ensure the text appears above the heart */
   }
   .heart:hover {
-    transform: rotate(90deg);
-    transition-delay: 0.4s;
+    transform: translate(-50%, -20%) rotate(45deg) scale(1.2);
+    box-shadow: 0 4px 15px rgba(252, 8, 231, 0.4);
   }
   
   .flap > .heart:hover {
-    transform: rotate(0deg);
+    transform: translate(-50%, -20%) rotate(90deg) scale(1.2);
+    box-shadow: 0 4px 15px rgba(252, 8, 231, 0.4);
   }
 
   /* Heart press (active) state for tactile feedback */
   .heart:active {
-    transform: translate(-50%, -20%) rotate(45deg) scale(0.9);
-    box-shadow: 0 0 0 rgba(0,0,0,0.2);
+    transform: translate(-50%, -20%) rotate(45deg) scale(0.95);
+    box-shadow: 0 2px 8px rgba(252, 8, 231, 0.6);
+  }
+
+  .flap > .heart:active {
+    transform: translate(-50%, -20%) rotate(90deg) scale(0.95);
+    box-shadow: 0 2px 8px rgba(252, 8, 231, 0.6);
+  }
+
+  /* Heart click animation */
+  .heart.clicked {
+    animation: heartPulse 0.6s ease-out;
+  }
+
+  @keyframes heartPulse {
+    0% {
+      transform: translate(-50%, -20%) rotate(45deg) scale(1);
+    }
+    25% {
+      transform: translate(-50%, -20%) rotate(45deg) scale(1.3);
+      box-shadow: 0 6px 20px rgba(252, 8, 231, 0.6);
+    }
+    50% {
+      transform: translate(-50%, -20%) rotate(45deg) scale(1.1);
+    }
+    100% {
+      transform: translate(-50%, -20%) rotate(90deg) scale(1);
+    }
+  }
+
+  /* Back button styling */
+  .envelope-wrapper > .back-button {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(252, 8, 231, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 6;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+
+  .envelope-wrapper > .back-button p {
+    margin: 0;
+  }
+
+  .envelope-wrapper > .back-button:hover {
+    background: rgba(252, 8, 231, 1);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 4px 15px rgba(252, 8, 231, 0.4);
+  }
+
+  .envelope-wrapper > .back-button:active {
+    transform: translateX(-50%) translateY(0px);
+    box-shadow: 0 2px 8px rgba(252, 8, 231, 0.6);
+  }
+
+  /* Show back button when envelope is open */
+  .flap > .back-button {
+    display: block !important;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+    transition-delay: 0.5s;
+  }
+
+  /* Hide click-me text when envelope is open */
+  .flap > .click-me {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Fireworks Container */
+  .fireworks-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1000;
+    overflow: hidden;
+  }
+
+  /* Firework particles */
+  .firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .firework.red {
+    background: #ff1744;
+    box-shadow: 0 0 6px #ff1744, 0 0 12px #ff1744;
+  }
+
+  .firework.blue {
+    background: #2196f3;
+    box-shadow: 0 0 6px #2196f3, 0 0 12px #2196f3;
+  }
+
+  .firework.green {
+    background: #4caf50;
+    box-shadow: 0 0 6px #4caf50, 0 0 12px #4caf50;
+  }
+
+  .firework.yellow {
+    background: #ffeb3b;
+    box-shadow: 0 0 6px #ffeb3b, 0 0 12px #ffeb3b;
+  }
+
+  .firework.purple {
+    background: #9c27b0;
+    box-shadow: 0 0 6px #9c27b0, 0 0 12px #9c27b0;
+  }
+
+  .firework.orange {
+    background: #ff9800;
+    box-shadow: 0 0 6px #ff9800, 0 0 12px #ff9800;
+  }
+
+  .firework.pink {
+    background: #e91e63;
+    box-shadow: 0 0 6px #e91e63, 0 0 12px #e91e63;
+  }
+
+  /* Firework explosion animation */
+  @keyframes explode {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1) rotate(180deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(0) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Different particle trajectories */
+  @keyframes particle1 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(120px, -80px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle2 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-120px, -80px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle3 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(80px, 120px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-80px, 120px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle5 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0px, -150px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle6 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0px, 150px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle7 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(150px, 0px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle8 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-150px, 0px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  /* Apply animations to firework particles */
+  .firework.animate1 {
+    animation: particle1 1.5s ease-out forwards;
+  }
+
+  .firework.animate2 {
+    animation: particle2 1.5s ease-out forwards;
+  }
+
+  .firework.animate3 {
+    animation: particle3 1.5s ease-out forwards;
+  }
+
+  .firework.animate4 {
+    animation: particle4 1.5s ease-out forwards;
+  }
+
+  .firework.animate5 {
+    animation: particle5 1.5s ease-out forwards;
+  }
+
+  .firework.animate6 {
+    animation: particle6 1.5s ease-out forwards;
+  }
+
+  .firework.animate7 {
+    animation: particle7 1.5s ease-out forwards;
+  }
+
+  .firework.animate8 {
+    animation: particle8 1.5s ease-out forwards;
+  }
+
+  /* Floating Hearts */
+  .floating-heart {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Heart shape using pseudo-elements */
+  .floating-heart::before,
+  .floating-heart::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 19px;
+    border-radius: 6px 6px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+  }
+
+  .floating-heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+  }
+
+  /* Different heart colors */
+  .floating-heart.pink::before,
+  .floating-heart.pink::after {
+    background: #ff69b4;
+    box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+  }
+
+  .floating-heart.red::before,
+  .floating-heart.red::after {
+    background: #ff1744;
+    box-shadow: 0 0 8px rgba(255, 23, 68, 0.6);
+  }
+
+  .floating-heart.purple::before,
+  .floating-heart.purple::after {
+    background: #e91e63;
+    box-shadow: 0 0 8px rgba(233, 30, 99, 0.6);
+  }
+
+  .floating-heart.magenta::before,
+  .floating-heart.magenta::after {
+    background: #ff006e;
+    box-shadow: 0 0 8px rgba(255, 0, 110, 0.6);
+  }
+
+  .floating-heart.rose::before,
+  .floating-heart.rose::after {
+    background: #ff1493;
+    box-shadow: 0 0 8px rgba(255, 20, 147, 0.6);
+  }
+
+  .floating-heart.coral::before,
+  .floating-heart.coral::after {
+    background: #ff7f7f;
+    box-shadow: 0 0 8px rgba(255, 127, 127, 0.6);
+  }
+
+  .floating-heart.lavender::before,
+  .floating-heart.lavender::after {
+    background: #dda0dd;
+    box-shadow: 0 0 8px rgba(221, 160, 221, 0.6);
+  }
+
+  /* Heart floating animations */
+  @keyframes floatUp1 {
+    0% {
+      transform: translateY(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-200px) rotate(180deg) scale(1.2);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-400px) rotate(360deg) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatUp2 {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    25% {
+      transform: translateY(-100px) translateX(-50px) rotate(90deg) scale(1.1);
+      opacity: 0.9;
+    }
+    75% {
+      transform: translateY(-300px) translateX(30px) rotate(270deg) scale(0.8);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(-450px) translateX(-20px) rotate(360deg) scale(0.3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatUp3 {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    30% {
+      transform: translateY(-120px) translateX(70px) rotate(-90deg) scale(1.3);
+      opacity: 0.9;
+    }
+    70% {
+      transform: translateY(-280px) translateX(-40px) rotate(180deg) scale(0.9);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateY(-420px) translateX(10px) rotate(270deg) scale(0.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatUp4 {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    20% {
+      transform: translateY(-80px) translateX(-30px) rotate(45deg) scale(1.1);
+      opacity: 0.95;
+    }
+    60% {
+      transform: translateY(-250px) translateX(60px) rotate(225deg) scale(0.7);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(-380px) translateX(-15px) rotate(405deg) scale(0.2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatUp5 {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(-160px) translateX(40px) rotate(-180deg) scale(1.4);
+      opacity: 0.8;
+    }
+    80% {
+      transform: translateY(-320px) translateX(-80px) rotate(90deg) scale(0.6);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateY(-460px) translateX(25px) rotate(450deg) scale(0.1);
+      opacity: 0;
+    }
+  }
+
+  /* Apply different animations to hearts */
+  .floating-heart.anim1 {
+    animation: floatUp1 3s ease-out forwards;
+  }
+
+  .floating-heart.anim2 {
+    animation: floatUp2 3.5s ease-out forwards;
+  }
+
+  .floating-heart.anim3 {
+    animation: floatUp3 4s ease-out forwards;
+  }
+
+  .floating-heart.anim4 {
+    animation: floatUp4 3.2s ease-out forwards;
+  }
+
+  .floating-heart.anim5 {
+    animation: floatUp5 3.8s ease-out forwards;
   }
