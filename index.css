@@ -23,8 +23,17 @@
     place-items: center;
   }
   .container > .envelope-wrapper {
-    background: var(--bg-envelope-color);
-    box-shadow: 0 0 40px var(--shadow-color);
+    background: linear-gradient(135deg, 
+      #f5edd1 0%, 
+      #e8d5ff 25%, 
+      #d8bfff 50%, 
+      #c8a9ff 75%, 
+      #b899ff 100%);
+    box-shadow: 0 0 60px rgba(184, 153, 255, 0.4), 
+                0 0 100px rgba(200, 169, 255, 0.2);
+    position: relative;
+    border-radius: 10px;
+    overflow: visible;
   }
   .envelope-wrapper > .envelope {
     position: relative;
@@ -178,55 +187,6 @@
     }
   }
 
-  /* Back button styling */
-  .envelope-wrapper > .back-button {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(252, 8, 231, 0.9);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    z-index: 6;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
-  }
-
-  .envelope-wrapper > .back-button p {
-    margin: 0;
-  }
-
-  .envelope-wrapper > .back-button:hover {
-    background: rgba(252, 8, 231, 1);
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 4px 15px rgba(252, 8, 231, 0.4);
-  }
-
-  .envelope-wrapper > .back-button:active {
-    transform: translateX(-50%) translateY(0px);
-    box-shadow: 0 2px 8px rgba(252, 8, 231, 0.6);
-  }
-
-  /* Show back button when envelope is open */
-  .flap > .back-button {
-    display: block !important;
-    opacity: 1;
-    transform: translateX(-50%) translateY(0px);
-    transition-delay: 0.5s;
-  }
-
-  /* Hide click-me text when envelope is open */
-  .flap > .click-me {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
 
   /* Fireworks Container */
   .fireworks-container {
@@ -603,4 +563,168 @@
 
   .floating-heart.anim5 {
     animation: floatUp5 3.8s ease-out forwards;
+  }
+
+  /* Romantic Decorative Elements */
+  .envelope-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 40%);
+    border-radius: 20px;
+    z-index: -1;
+  }
+
+  /* Decorative Hearts */
+  .envelope-wrapper::after {
+    content: '💜 💕 💜';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    z-index: 10;
+    animation: gentleGlow 3s ease-in-out infinite alternate;
+  }
+
+  /* Corner Flowers */
+  .envelope-wrapper .corner-flower-1,
+  .envelope-wrapper .corner-flower-2,
+  .envelope-wrapper .corner-flower-3,
+  .envelope-wrapper .corner-flower-4 {
+    position: absolute;
+    font-size: 24px;
+    z-index: 10;
+    animation: gentleSway 4s ease-in-out infinite;
+  }
+
+  .envelope-wrapper .corner-flower-1 {
+    top: -40px;
+    left: -40px;
+    animation-delay: 0s;
+  }
+
+  .envelope-wrapper .corner-flower-2 {
+    top: -40px;
+    right: -40px;
+    animation-delay: 1s;
+  }
+
+  .envelope-wrapper .corner-flower-3 {
+    bottom: -40px;
+    left: -40px;
+    animation-delay: 2s;
+  }
+
+  .envelope-wrapper .corner-flower-4 {
+    bottom: -40px;
+    right: -40px;
+    animation-delay: 3s;
+  }
+
+  /* Side Decorations */
+  .envelope-wrapper .side-hearts-left,
+  .envelope-wrapper .side-hearts-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    z-index: 10;
+    animation: heartBeat 2s ease-in-out infinite;
+  }
+
+  .envelope-wrapper .side-hearts-left {
+    left: -60px;
+  }
+
+  .envelope-wrapper .side-hearts-right {
+    right: -60px;
+    animation-delay: 1s;
+  }
+
+  /* Romantic Animations */
+  @keyframes gentleGlow {
+    0% {
+      text-shadow: 0 0 5px rgba(255, 105, 180, 0.8);
+      transform: translateX(-50%) scale(1);
+    }
+    100% {
+      text-shadow: 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(138, 43, 226, 0.8);
+      transform: translateX(-50%) scale(1.1);
+    }
+  }
+
+  @keyframes gentleSway {
+    0%, 100% {
+      transform: rotate(-5deg) scale(1);
+    }
+    50% {
+      transform: rotate(5deg) scale(1.1);
+    }
+  }
+
+  @keyframes heartBeat {
+    0%, 100% {
+      transform: translateY(-50%) scale(1);
+    }
+    50% {
+      transform: translateY(-50%) scale(1.2);
+    }
+  }
+
+  /* Sparkle Effects */
+  .envelope-wrapper .sparkle {
+    position: absolute;
+    color: #ff69b4;
+    font-size: 12px;
+    z-index: 10;
+    animation: sparkleFloat 6s ease-in-out infinite;
+  }
+
+  .envelope-wrapper .sparkle-1 {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .envelope-wrapper .sparkle-2 {
+    top: 30%;
+    right: 15%;
+    animation-delay: 2s;
+  }
+
+  .envelope-wrapper .sparkle-3 {
+    bottom: 25%;
+    left: 20%;
+    animation-delay: 4s;
+  }
+
+  .envelope-wrapper .sparkle-4 {
+    bottom: 35%;
+    right: 10%;
+    animation-delay: 1s;
+  }
+
+  @keyframes sparkleFloat {
+    0%, 100% {
+      opacity: 0.3;
+      transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+      opacity: 1;
+      transform: translateY(-10px) rotate(90deg);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translateY(-5px) rotate(180deg);
+    }
+    75% {
+      opacity: 1;
+      transform: translateY(-15px) rotate(270deg);
+    }
   }

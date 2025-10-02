@@ -1,7 +1,9 @@
 const envelope = document.querySelector('.envelope-wrapper');
 const heart = document.querySelector('.heart');
-const backButton = document.querySelector('.back-button');
 const fireworksContainer = document.querySelector('.fireworks-container');
+
+// Track envelope state
+let isEnvelopeOpen = false;
 
 // Function to create a single firework explosion
 function createFirework(x, y) {
@@ -113,31 +115,35 @@ function launchHeartShower() {
     }, 3200);
 }
 
-// Open the envelope on heart press (click) with enhanced animation
+// Toggle envelope on heart press (click) with enhanced animation
 heart.addEventListener('click', () => {
     // Add click animation class
     heart.classList.add('clicked');
     
-    // Open the envelope with a slight delay for the heart animation
-    setTimeout(() => {
-        envelope.classList.add('flap');
-        // Launch fireworks when envelope opens!
+    if (!isEnvelopeOpen) {
+        // Open the envelope with a slight delay for the heart animation
         setTimeout(() => {
-            launchFireworks();
-        }, 500);
-        // Launch heart shower from envelope!
+            envelope.classList.add('flap');
+            isEnvelopeOpen = true;
+            // Launch fireworks when envelope opens!
+            setTimeout(() => {
+                launchFireworks();
+            }, 500);
+            // Launch heart shower from envelope!
+            setTimeout(() => {
+                launchHeartShower();
+            }, 300);
+        }, 200);
+    } else {
+        // Close the envelope
         setTimeout(() => {
-            launchHeartShower();
-        }, 300);
-    }, 200);
+            envelope.classList.remove('flap');
+            isEnvelopeOpen = false;
+        }, 200);
+    }
     
     // Remove the clicked class after animation completes
     setTimeout(() => {
         heart.classList.remove('clicked');
     }, 600);
-});
-
-// Close the envelope when back button is clicked
-backButton.addEventListener('click', () => {
-    envelope.classList.remove('flap');
 });
